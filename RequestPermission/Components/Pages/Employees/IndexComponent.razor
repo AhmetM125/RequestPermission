@@ -1,0 +1,66 @@
+﻿@inherits ComponentBase
+@page "/employees"
+
+
+<div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Position</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (employees is not null && employees.Any())
+            {
+
+                foreach (var employee in employees)
+                {
+                    <tr>
+                        <td>@employee.FullName</td>
+                        <td>@employee.Department</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.Title</td>
+                        <td>
+                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect"></i>
+                        </td>
+                        <td>
+                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect"></i>
+                        </td>
+                    </tr>
+                }
+
+            }
+
+
+        </tbody>
+    </table>
+
+    <div style="display:flex;">
+        @for (int i = 0; i < 10; i++)
+        {
+            <div style="cursor:pointer;margin:3px;justify-content:center;text-align:center;align-items:center;">
+                <span>@i</span>
+            </div>
+        }
+    </div>
+
+
+</div>
+<style>
+    .icon-effect {
+        cursor: pointer;
+        color:black;
+    }
+
+        .icon-effect:hover {
+            opacity:0.8;
+            color:cornflowerblue
+        }
+</style>

@@ -1,0 +1,24 @@
+﻿@inherits ComponentBase
+
+<div class="row">
+    <table class="">
+        <thead>
+            <tr>
+                @if (ColumnNames != null && ColumnNames.Any())
+                {
+                    foreach (var columnName in ColumnNames)
+                    {
+                        <th>@columnName</th>
+                    }
+                }
+            </tr>
+        </thead>
+    </table>
+    @if (ColumnNames != null && Items.Any())
+    {
+        foreach (var item in Items)
+        {
+
+        }
+    }
+</div>
