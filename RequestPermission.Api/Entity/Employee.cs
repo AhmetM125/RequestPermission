@@ -1,18 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace RequestPermission.Api.Entity;
 
-namespace RequestPermission.Api.Entity
+public class Employee : BaseEntity
 {
-    public sealed class Employee
-    {
-        [Key]
-        public Guid E_ID { get; set; }
-        public string E_NAME { get; set; }
-        public string E_EMAIL { get; set; }
-        public string E_DEPARTMENT { get; set; }
-        public string E_TITLE { get; set; }
-        public Guid? E_MANAGERID { get; set; }
-        [ForeignKey("E_MANAGERID")]
-        public Employee E_MANAGER { get; set; }
-    }
+    public Guid E_ID { get; set; }
+    public string E_NAME { get; set; }
+    public string E_SURNAME { get; set; }
+    public string E_TITLE { get; set; }
+    public int E_DEPARTMENT { get; set; }
+    public Guid E_EMP_COMM_ID { get; set; }
+    public Department DEPARTMENT { get; set; }
+    public IEnumerable<Vacation> VACATIONS { get; set; }
+    public IEnumerable<UserRole> USER_ROLES { get; set; }
+    public EmployeeCommunication EMPLOYEE_COMMUNICATION { get; set; }
+
+
 }

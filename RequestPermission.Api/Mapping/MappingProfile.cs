@@ -12,10 +12,8 @@ namespace RequestPermission.Api.Mapping
             CreateMap<EmployeeDto, Employee>().ReverseMap()
               .ForMember(source => source.Id, opt => opt.MapFrom(dest => dest.E_ID))
               .ForMember(source => source.Name, opt => opt.MapFrom(dest => dest.E_NAME))
-              .ForMember(source => source.Email, opt => opt.MapFrom(dest => dest.E_EMAIL))
               .ForMember(source => source.Department, opt => opt.MapFrom(dest => dest.E_DEPARTMENT))
-              .ForMember(source => source.Title, opt => opt.MapFrom(dest => dest.E_TITLE))
-              .ForMember(source => source.ManagerId, opt => opt.MapFrom(dest => dest.E_MANAGERID));
+              .ForMember(source => source.Title, opt => opt.MapFrom(dest => dest.E_TITLE));
 
 
 

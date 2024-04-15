@@ -66,6 +66,15 @@ namespace RequestPermission.Api.DataLayer.Generic
         {
             return _requestPermissionContext.Set<T>();
         }
+        public IEnumerable<T> GetWithRawSql(string query, params object[] parameters) 
+
+        {
+            return _requestPermissionContext.Set<T>().FromSqlRaw(query, parameters).ToList();
+        }
+        public IEnumerable<T> GetWithRawSql(string query)
+        {
+            return _requestPermissionContext.Set<T>().FromSqlRaw(query).AsEnumerable();
+        }
         public void MultipleAdd(IEnumerable<T> entities)
         {
             _requestPermissionContext.AddRange(entities);

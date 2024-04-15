@@ -12,7 +12,12 @@ namespace RequestPermission.Api.Infrastracture
         {
             base.OnConfiguring(optionsBuilder);
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RequestPermissionContext).Assembly);
+        }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
     }
 }

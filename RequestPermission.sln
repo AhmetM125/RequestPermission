@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestPermission", "RequestPermission\RequestPermission.csproj", "{05274691-5377-432E-AEBF-D8E2651C6397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestPermission.Api", "RequestPermission.Api\RequestPermission.Api.csproj", "{F70AE5A1-9CFB-4C9A-885E-06CC3C78416F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestPermission.Api", "RequestPermission.Api\RequestPermission.Api.csproj", "{F70AE5A1-9CFB-4C9A-885E-06CC3C78416F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

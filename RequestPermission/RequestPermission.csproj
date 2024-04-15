@@ -11,4 +11,10 @@
     <Folder Include="Utils\Response-HttpClient\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="7.3.1" />
+    <PackageReference Include="Blazored.Toast" Version="4.2.1" />
+    <PackageReference Include="RazorLight" Version="2.3.1" />
+  </ItemGroup>
+
 </Project>

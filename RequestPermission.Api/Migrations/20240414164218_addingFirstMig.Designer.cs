@@ -12,8 +12,8 @@ using RequestPermission.Api.Infrastracture;
 namespace RequestPermission.Api.Migrations
 {
     [DbContext(typeof(RequestPermissionContext))]
-    [Migration("20240412084806_firstmig")]
-    partial class firstmig
+    [Migration("20240414164218_addingFirstMig")]
+    partial class addingFirstMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,34 +25,56 @@ namespace RequestPermission.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("RequestPermission.Api.Entity.Department", b =>
+                {
+                    b.Property<int>("D_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("D_ID"));
+
+                    b.Property<string>("D_NAME")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("D_ID");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("RequestPermission.Api.Entity.Employee", b =>
                 {
                     b.Property<Guid>("E_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("E_DEPARTMENT")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("E_DEPARTMENT")
+                        .HasColumnType("int");
 
                     b.Property<string>("E_EMAIL")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("E_MANAGERID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("E_NAME")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("E_SURNAME")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("E_TITLE")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("E_ID");
 
-                    b.HasIndex("E_MANAGERID");
+                    b.HasIndex("E_DEPARTMENT");
 
                     b.ToTable("Employees");
                 });
@@ -89,13 +111,13 @@ namespace RequestPermission.Api.Migrations
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Employee", b =>
                 {
-                    b.HasOne("RequestPermission.Api.Entity.Employee", "E_MANAGER")
-                        .WithMany()
-                        .HasForeignKey("E_MANAGERID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("RequestPermission.Api.Entity.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("E_DEPARTMENT")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("E_MANAGER");
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("RequestPermission.Api.Entity.Vacation", b =>
@@ -107,6 +129,11 @@ namespace RequestPermission.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("V_EMP");
+                });
+
+            modelBuilder.Entity("RequestPermission.Api.Entity.Department", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

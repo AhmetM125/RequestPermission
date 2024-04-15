@@ -31,9 +31,10 @@ namespace RequestPermission.Api.Controllers
         [HttpGet("GetAllEmployees")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees()
         {
-            var employees = _employeeService.GetEmployees();
+            var employeesDto = _employeeService.GetEmployeesRawQuery();
+            var employees = await _employeeService.GetEmployees();
             return Ok(employees);
         }
     }

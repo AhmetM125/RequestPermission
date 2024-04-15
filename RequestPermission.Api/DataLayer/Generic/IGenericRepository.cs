@@ -22,6 +22,8 @@ namespace RequestPermission.Api.DataLayer.Generic
         Task<IEnumerable<T>> GetAllAsync();
         Task AddAsync(T entity);
         Task MultipleAddAsync(IEnumerable<T> entities);
+         IEnumerable<T> GetWithRawSql(string query, params object[] parameters);
+         IEnumerable<T> GetWithRawSql(string query);
 
     }
 }

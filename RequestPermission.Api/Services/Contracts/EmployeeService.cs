@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RequestPermission.Api.DataLayer.Contract;
 using RequestPermission.Api.Dtos;
 using RequestPermission.Api.Entity;
 using RequestPermission.Api.Services.Concrete;
+using System.Diagnostics;
 
 namespace RequestPermission.Api.Services.Contracts
 {
@@ -16,11 +18,24 @@ namespace RequestPermission.Api.Services.Contracts
             _mapper = mapper;
         }
 
-        public List<EmployeeDto> GetEmployees()
+        public async Task<List<EmployeeDto>> GetEmployees()
         {
-            var employees = _efEmployeeDal.GetAll();
+            Stopwatch s = Stopwatch.StartNew();
+            var employees = await _efEmployeeDal.GetQueryable().AsNoTracking().ToListAsync();
             var employeesDto = _mapper.Map<List<EmployeeDto>>(employees);
+            s.Stop();
+            Debug.WriteLine($"GetEmployees took {s.ElapsedMilliseconds} ms");
             return employeesDto;
+        }
+
+        public List<EmployeeDto> GetEmployeesRawQuery()
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            string query = "SELECT * FROM Employees";
+            var employees = _efEmployeeDal.GetWithRawSql(query);
+            stopwatch.Stop();
+            Debug.WriteLine($"GetEmployeesRawQuery took {stopwatch.ElapsedMilliseconds} ms");
+            return _mapper.Map<List<EmployeeDto>>(employees);
         }
 
         public void InsertNewEmployee(EmployeeDto employee)
@@ -28,11 +43,9 @@ namespace RequestPermission.Api.Services.Contracts
             _efEmployeeDal.Add(new Employee()
             {
                 E_DEPARTMENT = employee.Department,
-                E_EMAIL = employee.Email,
                 E_ID = Guid.NewGuid(),
                 E_NAME = employee.Name,
                 E_TITLE = employee.Title,
-                E_MANAGERID = _efEmployeeDal.GetFirstOrDefault().E_ID // i will change it later for test purpose
             });
             _efEmployeeDal.Save();
         }

@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Toast;
 using RequestPermission.Components;
 using RequestPermission.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +12,15 @@ builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("http://localhost:5225")
 });
+builder.Services.AddBlazoredToast();
+builder.Services.AddBlazoredModal();
+
 
 builder.Services.AddServices();
 
 var app = builder.Build();
+
+
 
 
 

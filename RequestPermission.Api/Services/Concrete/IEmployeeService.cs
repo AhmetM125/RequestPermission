@@ -4,7 +4,9 @@ namespace RequestPermission.Api.Services.Concrete
 {
     public interface IEmployeeService
     {
-        List<EmployeeDto> GetEmployees();
+        Task<List<EmployeeDto>> GetEmployees();
+        List<EmployeeDto> GetEmployeesRawQuery();
         void InsertNewEmployee(EmployeeDto employee);
+
     }
 }

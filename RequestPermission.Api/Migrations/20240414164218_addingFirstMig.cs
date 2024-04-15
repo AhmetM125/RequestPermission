@@ -6,31 +6,43 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RequestPermission.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class firstmig : Migration
+    public partial class addingFirstMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    D_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    D_NAME = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.D_ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
                     E_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    E_NAME = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    E_EMAIL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    E_DEPARTMENT = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    E_TITLE = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    E_MANAGERID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    E_NAME = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    E_SURNAME = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    E_EMAIL = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    E_TITLE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    E_DEPARTMENT = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.E_ID);
                     table.ForeignKey(
-                        name: "FK_Employees_Employees_E_MANAGERID",
-                        column: x => x.E_MANAGERID,
-                        principalTable: "Employees",
-                        principalColumn: "E_ID",
-                        onDelete: ReferentialAction.NoAction);
+                        name: "FK_Employees_Departments_E_DEPARTMENT",
+                        column: x => x.E_DEPARTMENT,
+                        principalTable: "Departments",
+                        principalColumn: "D_ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -56,9 +68,9 @@ namespace RequestPermission.Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_E_MANAGERID",
+                name: "IX_Employees_E_DEPARTMENT",
                 table: "Employees",
-                column: "E_MANAGERID");
+                column: "E_DEPARTMENT");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacations_V_EMP_ID",
@@ -74,6 +86,9 @@ namespace RequestPermission.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }

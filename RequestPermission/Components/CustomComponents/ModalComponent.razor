@@ -1,0 +1,18 @@
+﻿@inherits ComponentBase
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            @Title
+        </div>
+        <br />
+        <div class="card-body">
+            @Description
+        </div>
+        @Body
+        <div class="card-footer">
+            <button class="btn btn-primary" @onclick="OnConfirm">Confirm</button>
+            <button class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+        </div>
+    </div>
+</div>

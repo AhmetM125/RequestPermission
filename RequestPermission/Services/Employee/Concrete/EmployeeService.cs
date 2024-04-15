@@ -10,7 +10,7 @@ namespace RequestPermission.Services.Employee.Concrete
         {
             ApiName = "http://localhost:5225/api/Employees/";
         }
-        public async Task<List<EmployeesGridVM>> GetAllEmployees()
+        public async Task<List<EmployeesGridVM>?> GetAllEmployees()
         {
             var response = await HttpClient.GetAsync(ApiName + "GetAllEmployees");
             if (response.IsSuccessStatusCode)
@@ -18,7 +18,7 @@ namespace RequestPermission.Services.Employee.Concrete
                 var employees = await response.Content.ReadFromJsonAsync<List<EmployeesGridVM>>();
                 return employees;
             }
-            return null;
+            return default(List<EmployeesGridVM>);
         }
     }
 }

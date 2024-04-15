@@ -4,6 +4,6 @@ namespace RequestPermission.Services.Employee.Abstract
 {
     public interface IEmployeeService
     {
-        Task<List<EmployeesGridVM>> GetAllEmployees();
+        Task<List<EmployeesGridVM>?> GetAllEmployees();
     }
 }
