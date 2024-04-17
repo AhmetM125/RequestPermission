@@ -18,36 +18,45 @@ namespace RequestPermission.Api.Services.Contracts
             _mapper = mapper;
         }
 
+        public EmployeeDto GetEmployeeForModify(Guid employeeId)
+        {
+            var employeeDto = _efEmployeeDal.GetFirstOrDefault(x => x.E_ID == employeeId);
+            return _mapper.Map<EmployeeDto>(employeeDto);
+        }
+
         public async Task<List<EmployeeDto>> GetEmployees()
         {
-            Stopwatch s = Stopwatch.StartNew();
-            var employees = await _efEmployeeDal.GetQueryable().AsNoTracking().ToListAsync();
-            var employeesDto = _mapper.Map<List<EmployeeDto>>(employees);
-            s.Stop();
-            Debug.WriteLine($"GetEmployees took {s.ElapsedMilliseconds} ms");
-            return employeesDto;
+            return _mapper.Map<List<EmployeeDto>>((await _efEmployeeDal.GetQueryable().ToListAsync()));
         }
 
         public List<EmployeeDto> GetEmployeesRawQuery()
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
             string query = "SELECT * FROM Employees";
             var employees = _efEmployeeDal.GetWithRawSql(query);
-            stopwatch.Stop();
-            Debug.WriteLine($"GetEmployeesRawQuery took {stopwatch.ElapsedMilliseconds} ms");
             return _mapper.Map<List<EmployeeDto>>(employees);
         }
 
-        public void InsertNewEmployee(EmployeeDto employee)
+        public async Task InsertNewEmployee(EmployeeDto employee)
         {
             _efEmployeeDal.Add(new Employee()
             {
                 E_DEPARTMENT = employee.Department,
                 E_ID = Guid.NewGuid(),
                 E_NAME = employee.Name,
+                E_SURNAME = "",
                 E_TITLE = employee.Title,
             });
-            _efEmployeeDal.Save();
+            await _efEmployeeDal.SaveAsync(CancellationToken.None);
+        }
+
+        public void UpdateUser(EmployeeDto employee)
+        {
+            var employeeDto = _efEmployeeDal.GetByFilter(x => x.E_ID == employee.Id);
+            employeeDto.E_NAME = employee.Name;
+            employeeDto.E_TITLE = employee.Title;
+            employeeDto.E_SURNAME = employee.Surname;
+
+            _efEmployeeDal.Update(employeeDto);
         }
     }
 }

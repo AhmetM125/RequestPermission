@@ -58,6 +58,11 @@ namespace RequestPermission.Api.DataLayer.Generic
             return _requestPermissionContext.Set<T>().FirstOrDefault();
         }
 
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        {
+            return _requestPermissionContext.Set<T>().FirstOrDefault(filter);
+        }
+
         public IQueryable<T> GetQueryable(Expression<Func<T, bool>> filter)
         {
             return _requestPermissionContext.Set<T>().Where(filter);
@@ -66,7 +71,7 @@ namespace RequestPermission.Api.DataLayer.Generic
         {
             return _requestPermissionContext.Set<T>();
         }
-        public IEnumerable<T> GetWithRawSql(string query, params object[] parameters) 
+        public IEnumerable<T> GetWithRawSql(string query, params object[] parameters)
 
         {
             return _requestPermissionContext.Set<T>().FromSqlRaw(query, parameters).ToList();
@@ -99,8 +104,26 @@ namespace RequestPermission.Api.DataLayer.Generic
             _requestPermissionContext.SaveChanges();
         }
 
-        public async Task SaveAsync()
+        public async Task SaveAsync(CancellationToken cancellationToken = default)
         {
+            var currentTime = DateTime.UtcNow;
+            var currentUserId = Guid.Empty; // i need session user id here (later)
+            var currentUser = "ahmet.yurdal";
+
+            var changes = _requestPermissionContext.ChangeTracker.Entries();
+            foreach (var entity in changes)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    entity.Property("InsertDate").CurrentValue = currentTime;
+                    entity.Property("InsertUser").CurrentValue = currentUser;
+                }
+                else if (entity.State == EntityState.Modified)
+                {
+                    entity.Property("UpdateDate").CurrentValue = currentTime;
+                    entity.Property("UpdateUser").CurrentValue = currentUser;
+                }
+            }
             await _requestPermissionContext.SaveChangesAsync();
         }
 

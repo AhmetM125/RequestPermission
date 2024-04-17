@@ -29,13 +29,27 @@ namespace RequestPermission.Api.Controllers
             return StatusCode((int)HttpStatusCode.Created);
         }
         [HttpGet("GetAllEmployees")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<EmployeeDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllEmployees()
         {
             var employeesDto = _employeeService.GetEmployeesRawQuery();
             var employees = await _employeeService.GetEmployees();
             return Ok(employees);
+        }
+        [HttpGet("GetEmployeeForModify/{employeeId:Guid}")]
+        [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetEmployeeForModify(Guid employeeId)
+        {
+            var employee = _employeeService.GetEmployeeForModify(employeeId);
+            return Ok(employee);
+        }
+        [HttpPost("UpdateUser")]
+        public IActionResult UpdateUser(EmployeeUpdateDto employee)
+        {
+            _employeeService.UpdateUser(_mapper.Map<EmployeeDto>(employee));
+            return Ok();
         }
     }
 }

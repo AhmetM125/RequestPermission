@@ -13,10 +13,10 @@ namespace RequestPermission.Api.Infrastracture.DatabaseConfigurations
             builder.Property(v => v.V_END_DATE).HasColumnType("datetime");
             builder.Property(v => v.V_REASON).HasMaxLength(100);
             builder.Property(v => v.V_TYPE).HasMaxLength(50);
-            builder.Property(v => v.InsertUser).HasColumnType("nvarchar(50)");
+            builder.Property(v => v.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
             builder.Property(v => v.InsertDate).HasColumnType("datetime");
             builder.Property(v => v.UpdateDate).HasColumnType("datetime");
-            builder.Property(v => v.UpdateUser).HasColumnType("nvarchar(50)");
+            builder.Property(v => v.UpdateUser).IsRequired(false).HasColumnType("nvarchar(50)");
 
             builder.HasOne(v => v.V_EMP)
                 .WithMany(e => e.VACATIONS)

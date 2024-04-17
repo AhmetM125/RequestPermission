@@ -3,6 +3,6 @@
     public interface IUnitOfWork
     {
         void Save();
-        Task SaveAsync();
+        Task SaveAsync(CancellationToken cancellationToken);
     }
 }

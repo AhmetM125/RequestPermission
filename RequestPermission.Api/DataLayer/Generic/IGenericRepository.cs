@@ -7,6 +7,7 @@ namespace RequestPermission.Api.DataLayer.Generic
         T GetByFilter(Expression<Func<T, bool>> filter);
         T Get(int id);
         T GetFirstOrDefault();
+        T GetFirstOrDefault(Expression<Func<T,bool>> filter);
         IEnumerable<T> GetAll();
         IQueryable<T> GetQueryable(Expression<Func<T, bool>> filter);
         IQueryable<T> GetQueryable();

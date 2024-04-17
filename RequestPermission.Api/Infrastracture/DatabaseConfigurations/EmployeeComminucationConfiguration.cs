@@ -13,10 +13,10 @@ namespace RequestPermission.Api.Infrastracture.DatabaseConfigurations
             builder.Property(e => e.EC_COUNTRY).HasColumnType("nvarchar(50)");
             builder.Property(e => e.EC_PHONE).HasColumnType("nvarchar(50)");
             builder.Property(e => e.EC_EMAIL).HasColumnType("nvarchar(50)");
-            builder.Property(e => e.InsertUser).HasColumnType("nvarchar(50)");
+            builder.Property(e => e.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
             builder.Property(e => e.InsertDate).HasColumnType("datetime");
             builder.Property(e => e.UpdateDate).HasColumnType("datetime");
-            builder.Property(e => e.UpdateUser).HasColumnType("nvarchar(50)");
+            builder.Property(e => e.UpdateUser).IsRequired(false).HasColumnType("nvarchar(50)");
         }
     }
 }

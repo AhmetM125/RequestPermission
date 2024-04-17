@@ -1,8 +1,16 @@
 ﻿@page "/employees"
-<button @onclick="ShowModal">Show Modal</button>
-<button @onclick="GetEmployees">Get Employees</button>
-<div>
+@using Components.CustomComponents
+@inherits RazorBaseComponent
 
+<div style="display:flex;justify-content:flex-end">
+
+    <button class="btn btn-danger" @onclick="()=>InsertEmployee(PageStatus.Insert)">
+        <i class="fa-solid fa-plus"></i>
+        Insert Employee
+    </button>
+</div>
+
+<div>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -15,9 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <RequestPermission.Components.CustomComponents.ModalComponent>
-            
-            </RequestPermission.Components.CustomComponents.ModalComponent>
+
             @if (employees is not null && employees.Any())
             {
 
@@ -29,11 +35,12 @@
                         <td>@employee.Email</td>
                         <td>@employee.Title</td>
                         <td>
-                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect"></i>
+                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>openModal(employee.Id)"></i>
                         </td>
                         <td>
                             <i style="cursor:pointer" class="fa-solid fa-trash icon-effect"></i>
                         </td>
+
                     </tr>
                 }
 
@@ -46,26 +53,46 @@
 
         </tbody>
     </table>
-
+    @*
     <div style="display:flex;">
-        @for (int i = 0; i < 10; i++)
-        {
-            <div style="cursor:pointer;margin:3px;justify-content:center;text-align:center;align-items:center;">
-                <span>@i</span>
-            </div>
-        }
+    @for (int i = 0; i < 10; i++)
+    {
+    <div style="cursor:pointer;margin:3px;justify-content:center;text-align:center;align-items:center;">
+    <span>@i</span>
     </div>
+    }
+    </div> *@
 
 
 </div>
 <style>
     .icon-effect {
         cursor: pointer;
-        color:black;
+        color: black;
     }
 
         .icon-effect:hover {
-            opacity:0.8;
-            color:cornflowerblue
+            opacity: 0.8;
+            color: cornflowerblue
         }
 </style>
+
+
+<RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
+    <Body>
+        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus">
+
+        </RequestPermission.Components.Pages.Employees.ModiyComponent>
+    </Body>
+</RequestPermission.Components.CustomComponents.CustomModalComponent>
+
+<RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
+    <Body>
+        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus" >
+
+        </RequestPermission.Components.Pages.Employees.ModiyComponent>
+    </Body>
+</RequestPermission.Components.CustomComponents.CustomModalComponent>
+
+
+

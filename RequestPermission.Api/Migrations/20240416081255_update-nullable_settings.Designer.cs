@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RequestPermission.Api.Infrastracture;
 
@@ -11,9 +12,11 @@ using RequestPermission.Api.Infrastracture;
 namespace RequestPermission.Api.Migrations
 {
     [DbContext(typeof(RequestPermissionContext))]
-    partial class RequestPermissionContextModelSnapshot : ModelSnapshot
+    [Migration("20240416081255_update-nullable_settings")]
+    partial class updatenullable_settings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace RequestPermission.Api.Migrations
                     b.Property<int>("E_DEPARTMENT")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("E_EMP_COMM_ID")
+                    b.Property<Guid>("E_EMP_COMM_ID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("E_NAME")
@@ -96,8 +99,7 @@ namespace RequestPermission.Api.Migrations
                     b.HasIndex("E_DEPARTMENT");
 
                     b.HasIndex("E_EMP_COMM_ID")
-                        .IsUnique()
-                        .HasFilter("[E_EMP_COMM_ID] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -291,7 +293,8 @@ namespace RequestPermission.Api.Migrations
                     b.HasOne("RequestPermission.Api.Entity.EmployeeCommunication", "EMPLOYEE_COMMUNICATION")
                         .WithOne()
                         .HasForeignKey("RequestPermission.Api.Entity.Employee", "E_EMP_COMM_ID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("DEPARTMENT");
 

@@ -9,10 +9,10 @@ namespace RequestPermission.Api.Infrastracture.DatabaseConfigurations
         {
             builder.HasKey(x => x.D_ID);
             builder.Property(x => x.D_NAME).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.InsertUser).HasColumnType("nvarchar(50)");
+            builder.Property(x => x.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
             builder.Property(x => x.InsertDate).HasColumnType("datetime");
             builder.Property(x => x.UpdateDate).HasColumnType("datetime");
-            builder.Property(x => x.UpdateUser).HasColumnType("nvarchar(50)");
+            builder.Property(x => x.UpdateUser).IsRequired(false).HasColumnType("nvarchar(50)");
 
             builder.HasMany(d => d.EMPLOYEES)
             .WithOne(e => e.DEPARTMENT)

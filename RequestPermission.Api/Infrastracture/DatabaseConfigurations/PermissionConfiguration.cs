@@ -10,7 +10,6 @@ namespace RequestPermission.Api.Infrastracture.DatabaseConfigurations
         {
             builder.HasKey(p => p.P_ID);
             builder.Property(p => p.P_NAME).IsRequired().HasMaxLength(50).HasColumnType("nvarchar(50)");
-            builder.Property(p => p.P_NAME).IsRequired(false).HasMaxLength(50).HasColumnType("nvarchar(50)");
             builder.HasMany(x=>x.ROLE_PERMISSION).WithOne(x=>x.PERMISSION).HasForeignKey(x=>x.RP_PERMISSION_ID).OnDelete(DeleteBehavior.NoAction);
 
         }

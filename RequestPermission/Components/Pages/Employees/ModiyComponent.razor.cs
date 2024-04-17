@@ -1,8 +1,61 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using RequestPermission.Base;
+using RequestPermission.Services.Employee.Abstract;
+using RequestPermission.ViewModels.Employees;
 
 namespace RequestPermission.Components.Pages.Employees
 {
-    public partial class ModiyComponent :ComponentBase
+    public partial class ModiyComponent : ComponentBase
     {
+        [Parameter] public EmployeeModifyVM EmployeeModifyVM { get; set; }
+        [Inject] IEmployeeService _employeeService { get; set; }
+        [Inject] IJSRuntime JSRuntime { get; set; }
+        [Parameter] public PageStatus PageMode { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await GetEmployee();
+            await base.OnInitializedAsync();
+        }
+        protected override async Task OnParametersSetAsync()
+        {
+            await GetEmployee();
+            await base.OnParametersSetAsync();
+        }
+        async Task GetEmployee()
+        {
+            if (EmployeeModifyVM is not null && EmployeeModifyVM.Id != Guid.Empty)
+                EmployeeModifyVM = await _employeeService.GetEmployeeForModify(EmployeeModifyVM.Id);
+        }
+        async Task CloseModal()
+        {
+            await JSRuntime.InvokeVoidAsync("CloseModal", "employeeModifyModal");
+        }
+        async Task SaveModal()
+        {
+            switch (PageMode)
+            {
+                case PageStatus.Modify:
+                    _employeeService.UpdateUser(EmployeeModifyVM);
+                    break;
+                case PageStatus.Insert:
+                    var employeeInsertDto = new EmployeeInsertDto()
+                    {
+                        Title = EmployeeModifyVM.Position,
+                        Name = EmployeeModifyVM.Name,
+                        Email = EmployeeModifyVM.Email,
+                        Department = 3,
+                    };
+                    _employeeService.InsertUser(employeeInsertDto);
+                    break;
+                case PageStatus.Delete:
+                    break;
+                default:
+                    break;
+            }
+
+            await JSRuntime.InvokeVoidAsync("CloseModal", "employeeModifyModal");
+        }
     }
 }

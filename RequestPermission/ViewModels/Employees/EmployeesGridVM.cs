@@ -4,12 +4,16 @@ namespace RequestPermission.ViewModels.Employees
 {
     public record class EmployeesGridVM
     {
-        public EmployeesGridVM(string fullName, string email, string department, string title)
+        public EmployeesGridVM(string fullName, string email, int department, string title)
         {
             FullName = fullName;
             Email = email;
             Department = department;
             Title = title;
+        }
+        public static EmployeesGridVM CreateEmployeeForModify()
+        {
+            return new EmployeesGridVM("", "", 0, "");
         }
         [JsonPropertyName("id")]
       
@@ -21,7 +25,7 @@ namespace RequestPermission.ViewModels.Employees
         public string Email { get; init; }
         [JsonPropertyName("department")]
 
-        public string Department { get; init; }
+        public int Department { get; init; }
         [JsonPropertyName("title")]
         public string Title { get; init; }
 
