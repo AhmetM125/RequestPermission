@@ -11,6 +11,7 @@ namespace RequestPermission.Components.Pages.Employees
         [Parameter] public EmployeeModifyVM EmployeeModifyVM { get; set; }
         [Inject] IEmployeeService _employeeService { get; set; }
         [Parameter] public PageStatus PageMode { get; set; }
+        [Parameter] public EventCallback OnClose { get; set; }  
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,6 +53,7 @@ namespace RequestPermission.Components.Pages.Employees
                     break;
             }
 
+            await OnClose.InvokeAsync();
             await CloseModal();
         }
     }

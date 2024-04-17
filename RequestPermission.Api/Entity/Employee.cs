@@ -12,6 +12,4 @@ public class Employee : BaseEntity
     public IEnumerable<Vacation> VACATIONS { get; set; }
     public IEnumerable<UserRole> USER_ROLES { get; set; }
     public EmployeeCommunication EMPLOYEE_COMMUNICATION { get; set; }
-
-
 }

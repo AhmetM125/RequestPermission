@@ -1,6 +1,6 @@
-﻿namespace RequestPermission.Api.Dtos;
+﻿namespace RequestPermission.Api.Dtos.Employee;
 
-public record  EmployeeDto
+public record EmployeeDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

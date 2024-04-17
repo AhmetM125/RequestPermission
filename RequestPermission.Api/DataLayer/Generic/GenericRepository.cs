@@ -1,7 +1,4 @@
-﻿
-using Azure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+﻿using Microsoft.EntityFrameworkCore;
 using RequestPermission.Api.Infrastracture;
 using System.Linq.Expressions;
 
@@ -32,6 +29,13 @@ namespace RequestPermission.Api.DataLayer.Generic
         {
             _requestPermissionContext.RemoveRange(_requestPermissionContext.Set<T>());
         }
+
+        public void DeleteById(Guid id)
+        {
+            var obj = _requestPermissionContext.Find<T>(id);
+            _requestPermissionContext.Remove(obj);
+        }
+
         public T Get(int id)
         {
             return _requestPermissionContext.Set<T>().FirstOrDefault();

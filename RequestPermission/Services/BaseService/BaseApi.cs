@@ -49,4 +49,17 @@ public class BaseApi
             throw new Exception(errorMessage);
         }
     }
+    protected async Task HandleDeleteResponse(Guid id, string requestUrl)
+    {
+        var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+            throw new Exception(errorMessage);
+        }
+    }
+    //protected async Task HandleDeleteResponse(Guid id,string requestUrl)
+    //{
+    //    var response = await HttpClient.DeleteFromJsonAsync(ApiName + requestUrl,);
+    //}
 }

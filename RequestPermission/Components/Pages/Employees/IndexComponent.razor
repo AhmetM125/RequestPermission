@@ -37,7 +37,7 @@
                             <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>openModal(employee.Id)"></i>
                         </td>
                         <td>
-                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect"></i>
+                            <i style="cursor:pointer" class="fa-solid fa-trash icon-effect" @onclick="()=>DeleteEmployee(employee.Id)"></i>
                         </td>
 
                     </tr>
@@ -57,19 +57,12 @@
 
 <RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
     <Body>
-        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus">
+        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus" OnClose="LoadEmployees">
 
         </RequestPermission.Components.Pages.Employees.ModiyComponent>
     </Body>
 </RequestPermission.Components.CustomComponents.CustomModalComponent>
 
-<RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
-    <Body>
-        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus">
-
-        </RequestPermission.Components.Pages.Employees.ModiyComponent>
-    </Body>
-</RequestPermission.Components.CustomComponents.CustomModalComponent>
 
 
 

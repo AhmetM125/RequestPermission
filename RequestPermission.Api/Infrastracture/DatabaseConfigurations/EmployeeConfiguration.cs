@@ -14,8 +14,8 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(x => x.E_DEPARTMENT);
         builder.Property(x => x.E_TITLE).HasColumnType("nvarchar(50)").HasMaxLength(50);
         builder.Property(x => x.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
-        builder.Property(x => x.InsertDate).HasColumnType("datetime");
-        builder.Property(x => x.UpdateDate).HasColumnType("datetime");
+        builder.Property(x => x.InsertDate).IsRequired(false).HasColumnType("datetime");
+        builder.Property(x => x.UpdateDate).IsRequired(false).HasColumnType("datetime");
         builder.Property(x => x.UpdateUser).IsRequired(false).HasColumnType("nvarchar(50)");
         builder.Property(x => x.E_EMP_COMM_ID).IsRequired(false);
 

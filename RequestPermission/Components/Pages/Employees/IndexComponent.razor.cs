@@ -16,31 +16,38 @@ public partial class IndexComponent : RazorBaseComponent
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadEmployees();
+        if (employees is null) 
+            await LoadEmployees();
+
         await base.OnInitializedAsync();
     }
     async Task LoadEmployees()
     {
-        if (employees is null)
-            employees = await _employeeService.GetAllEmployees()
-                                ?? Enumerable.Empty<EmployeesGridVM>().ToList();
-
+        employees = await _employeeService.GetAllEmployees()
+                            ?? Enumerable.Empty<EmployeesGridVM>().ToList();
     }
     async Task GetEmployees() => await LoadEmployees();
-    void openModal(Guid employeeId)
+    async Task openModal(Guid employeeId)
     {
         var result = employees.FirstOrDefault(x => x.Id == employeeId);
         employeeModifyVM.Id = result.Id;
-        InvokeVoidJavascript();
+        await InvokeVoidJavascript();
     }
-    void InsertEmployee(PageStatus pageStatus)
+    async Task InsertEmployee(PageStatus pageStatus)
     {
         PageStatus = pageStatus;
         employeeModifyVM = new();
-        InvokeVoidJavascript();
+        await InvokeVoidJavascript();
     }
-    void InvokeVoidJavascript()
-      => JSRuntime.InvokeVoidAsync("OpenModal", "employeeModifyModal");
+    async Task InvokeVoidJavascript()
+      => await JSRuntime.InvokeVoidAsync("OpenModal", "employeeModifyModal");
+
+    async Task DeleteEmployee(Guid employeeId)
+    {
+        await _employeeService.DeleteSelectedEmployee(employeeId);
+        await LoadEmployees();
+    }
+
 
 
 }

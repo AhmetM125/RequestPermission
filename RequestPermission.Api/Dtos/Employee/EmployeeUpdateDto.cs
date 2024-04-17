@@ -1,4 +1,4 @@
-﻿namespace RequestPermission.Api.Dtos;
+﻿namespace RequestPermission.Api.Dtos.Employee;
 
 public record EmployeeUpdateDto
 {

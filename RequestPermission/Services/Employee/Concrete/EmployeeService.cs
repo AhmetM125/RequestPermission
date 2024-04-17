@@ -12,6 +12,10 @@ public class EmployeeService : BaseApi, IEmployeeService
     {
         ApiName = "http://localhost:5225/api/Employees/";
     }
+
+    public async Task DeleteSelectedEmployee(Guid employeeId) => await HandleDeleteResponse(employeeId, $"DeleteEmployee/{employeeId}");
+
+
     public async Task<List<EmployeesGridVM>?> GetAllEmployees()
     {
         var response = await HttpClient.GetAsync(ApiName + "GetAllEmployees");
@@ -35,7 +39,7 @@ public class EmployeeService : BaseApi, IEmployeeService
     }
 
     public async Task InsertUser(EmployeeInsertDto employeeModifyVM)
-     => await HandlePostResponseAsJson(employeeModifyVM,"InsertNewEmployee");
+     => await HandlePostResponseAsJson(employeeModifyVM, "InsertNewEmployee");
 
 
     public async Task UpdateUser(EmployeeModifyVM employeeModifyVM)
