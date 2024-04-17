@@ -1,13 +1,12 @@
 ﻿using RequestPermission.Services.Employee.Abstract;
 using RequestPermission.Services.Employee.Concrete;
 
-namespace RequestPermission.DependencyInjection
+namespace RequestPermission.DependencyInjection;
+
+public static class DependencyConfigurations
 {
-    public static class DependencyConfigurations
+    public static void AddServices(this IServiceCollection services)
     {
-        public static void AddServices(this IServiceCollection services)
-        {
-            services.AddScoped<IEmployeeService, EmployeeService>();
-        }
+        services.AddScoped<IEmployeeService, EmployeeService>();
     }
 }

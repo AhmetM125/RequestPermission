@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using RequestPermission.Base;
 
-namespace RequestPermission.Components.RequestPermission
+namespace RequestPermission.Components.RequestPermission;
+
+public partial class IndexComponent : RazorBaseComponent
 {
-    public partial class IndexComponent : ComponentBase
-    {
 
-    }
 }

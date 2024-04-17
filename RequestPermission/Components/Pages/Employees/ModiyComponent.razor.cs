@@ -6,11 +6,10 @@ using RequestPermission.ViewModels.Employees;
 
 namespace RequestPermission.Components.Pages.Employees
 {
-    public partial class ModiyComponent : ComponentBase
+    public partial class ModiyComponent : RazorBaseComponent
     {
         [Parameter] public EmployeeModifyVM EmployeeModifyVM { get; set; }
         [Inject] IEmployeeService _employeeService { get; set; }
-        [Inject] IJSRuntime JSRuntime { get; set; }
         [Parameter] public PageStatus PageMode { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -28,16 +27,14 @@ namespace RequestPermission.Components.Pages.Employees
             if (EmployeeModifyVM is not null && EmployeeModifyVM.Id != Guid.Empty)
                 EmployeeModifyVM = await _employeeService.GetEmployeeForModify(EmployeeModifyVM.Id);
         }
-        async Task CloseModal()
-        {
-            await JSRuntime.InvokeVoidAsync("CloseModal", "employeeModifyModal");
-        }
+        async Task CloseModal() => await CloseModal("employeeModifyModal");
+
         async Task SaveModal()
         {
             switch (PageMode)
             {
                 case PageStatus.Modify:
-                    _employeeService.UpdateUser(EmployeeModifyVM);
+                    await _employeeService.UpdateUser(EmployeeModifyVM);
                     break;
                 case PageStatus.Insert:
                     var employeeInsertDto = new EmployeeInsertDto()
@@ -47,7 +44,7 @@ namespace RequestPermission.Components.Pages.Employees
                         Email = EmployeeModifyVM.Email,
                         Department = 3,
                     };
-                    _employeeService.InsertUser(employeeInsertDto);
+                    await _employeeService.InsertUser(employeeInsertDto);
                     break;
                 case PageStatus.Delete:
                     break;
@@ -55,7 +52,7 @@ namespace RequestPermission.Components.Pages.Employees
                     break;
             }
 
-            await JSRuntime.InvokeVoidAsync("CloseModal", "employeeModifyModal");
+            await CloseModal();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Blazored.Modal.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using RequestPermission.Base;
 using RequestPermission.Services.Employee.Abstract;
@@ -11,10 +10,10 @@ public partial class IndexComponent : RazorBaseComponent
 {
     private List<EmployeesGridVM> employees;
     [Inject] private IEmployeeService _employeeService { get; set; }
-    [Inject] public IModalService Modal { get; set; } = default!;
-    [Inject] IJSRuntime JSRuntime { get; set; }
+
     EmployeeModifyVM employeeModifyVM = new EmployeeModifyVM();
     PageStatus PageStatus { get; set; } = PageStatus.List;
+
     protected override async Task OnInitializedAsync()
     {
         await LoadEmployees();
@@ -27,22 +26,22 @@ public partial class IndexComponent : RazorBaseComponent
                                 ?? Enumerable.Empty<EmployeesGridVM>().ToList();
 
     }
-    async Task GetEmployees()
-    {
-        await LoadEmployees();
-    }
+    async Task GetEmployees() => await LoadEmployees();
     void openModal(Guid employeeId)
     {
         var result = employees.FirstOrDefault(x => x.Id == employeeId);
         employeeModifyVM.Id = result.Id;
-        JSRuntime.InvokeVoidAsync("OpenModal", "employeeModifyModal");
+        InvokeVoidJavascript();
     }
     void InsertEmployee(PageStatus pageStatus)
     {
         PageStatus = pageStatus;
         employeeModifyVM = new();
-        JSRuntime.InvokeVoidAsync("OpenModal", "employeeModifyModal");
+        InvokeVoidJavascript();
     }
+    void InvokeVoidJavascript()
+      => JSRuntime.InvokeVoidAsync("OpenModal", "employeeModifyModal");
+
 
 }
 

@@ -26,7 +26,6 @@
 
             @if (employees is not null && employees.Any())
             {
-
                 foreach (var employee in employees)
                 {
                     <tr>
@@ -43,7 +42,6 @@
 
                     </tr>
                 }
-
             }
             else
             {
@@ -53,29 +51,8 @@
 
         </tbody>
     </table>
-    @*
-    <div style="display:flex;">
-    @for (int i = 0; i < 10; i++)
-    {
-    <div style="cursor:pointer;margin:3px;justify-content:center;text-align:center;align-items:center;">
-    <span>@i</span>
-    </div>
-    }
-    </div> *@
-
-
 </div>
-<style>
-    .icon-effect {
-        cursor: pointer;
-        color: black;
-    }
 
-        .icon-effect:hover {
-            opacity: 0.8;
-            color: cornflowerblue
-        }
-</style>
 
 
 <RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
@@ -88,7 +65,7 @@
 
 <RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
     <Body>
-        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus" >
+        <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus">
 
         </RequestPermission.Components.Pages.Employees.ModiyComponent>
     </Body>

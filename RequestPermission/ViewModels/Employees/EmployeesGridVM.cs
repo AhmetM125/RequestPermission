@@ -11,20 +11,13 @@ namespace RequestPermission.ViewModels.Employees
             Department = department;
             Title = title;
         }
-        public static EmployeesGridVM CreateEmployeeForModify()
-        {
-            return new EmployeesGridVM("", "", 0, "");
-        }
         [JsonPropertyName("id")]
-      
         public Guid Id { get; set; }
         [JsonPropertyName("name")]
-     
         public string FullName { get; init; }
         [JsonPropertyName("email")]
         public string Email { get; init; }
         [JsonPropertyName("department")]
-
         public int Department { get; init; }
         [JsonPropertyName("title")]
         public string Title { get; init; }

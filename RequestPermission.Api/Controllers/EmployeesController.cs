@@ -22,29 +22,53 @@ namespace RequestPermission.Api.Controllers
             _mapper = mapper;
         }
         [HttpPost("InsertNewEmployee")]
-        public IActionResult CreateNewUser(EmployeeAddDto employee)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateNewUser(EmployeeAddDto employee)
         {
-            var employeeDto = _mapper.Map<EmployeeDto>(employee);
-            _employeeService.InsertNewEmployee(employeeDto);
-            return StatusCode((int)HttpStatusCode.Created);
+            try
+            {
+                var employeeDto = _mapper.Map<EmployeeDto>(employee);
+                await _employeeService.InsertNewEmployee(employeeDto);
+                return StatusCode((int)HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
+
         [HttpGet("GetAllEmployees")]
         [ProducesResponseType(typeof(List<EmployeeDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllEmployees()
         {
-            var employeesDto = _employeeService.GetEmployeesRawQuery();
-            var employees = await _employeeService.GetEmployees();
-            return Ok(employees);
+            try
+            {
+                return Ok(await _employeeService.GetEmployees());
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
+
         [HttpGet("GetEmployeeForModify/{employeeId:Guid}")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetEmployeeForModify(Guid employeeId)
         {
-            var employee = _employeeService.GetEmployeeForModify(employeeId);
-            return Ok(employee);
+            try
+            {
+                var employee = _employeeService.GetEmployeeForModify(employeeId);
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
+
         [HttpPost("UpdateUser")]
         public IActionResult UpdateUser(EmployeeUpdateDto employee)
         {
