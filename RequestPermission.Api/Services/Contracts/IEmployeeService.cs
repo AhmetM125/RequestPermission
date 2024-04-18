@@ -1,6 +1,6 @@
 ﻿using RequestPermission.Api.Dtos.Employee;
 
-namespace RequestPermission.Api.Services.Concrete;
+namespace RequestPermission.Api.Services.Contracts;
 
 public interface IEmployeeService
 {

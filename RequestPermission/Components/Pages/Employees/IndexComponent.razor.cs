@@ -16,17 +16,17 @@ public partial class IndexComponent : RazorBaseComponent
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         if (employees is null) 
             await LoadEmployees();
 
-        await base.OnInitializedAsync();
+       
     }
     async Task LoadEmployees()
     {
         employees = await _employeeService.GetAllEmployees()
                             ?? Enumerable.Empty<EmployeesGridVM>().ToList();
     }
-    async Task GetEmployees() => await LoadEmployees();
     async Task openModal(Guid employeeId)
     {
         var result = employees.FirstOrDefault(x => x.Id == employeeId);

@@ -3,6 +3,6 @@ using RequestPermission.Api.Entity;
 
 namespace RequestPermission.Api.DataLayer.Contract;
 
-public interface IEfEmployeeDal : IGenericRepository<Employee>
+public interface IEfDepartmentDal : IGenericRepository<Department>
 {
 }

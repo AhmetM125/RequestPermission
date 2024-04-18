@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("http://localhost:5225")
+    BaseAddress = new Uri("http://localhost:5225/api/")
 });
 builder.Services.AddBlazoredToast();
 builder.Services.AddBlazoredModal();

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RequestPermission.Api.Dtos.Employee;
-using RequestPermission.Api.Services.Concrete;
+using RequestPermission.Api.Services.Contracts;
 using System.Net;
 
 namespace RequestPermission.Api.Controllers;

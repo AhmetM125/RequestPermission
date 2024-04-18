@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RequestPermission.Api.DataLayer.Contract;
 using RequestPermission.Api.Dtos.Employee;
 using RequestPermission.Api.Entity;
-using RequestPermission.Api.Services.Concrete;
+using RequestPermission.Api.Services.Contracts;
 
-namespace RequestPermission.Api.Services.Contracts;
+namespace RequestPermission.Api.Services.Concrete;
 
 public class EmployeeService : IEmployeeService
 {
@@ -33,7 +33,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<List<EmployeeDto>> GetEmployees()
     {
-        return _mapper.Map<List<EmployeeDto>>((await _efEmployeeDal.GetQueryable().ToListAsync()));
+        return _mapper.Map<List<EmployeeDto>>(await _efEmployeeDal.GetQueryable().ToListAsync());
     }
 
     public List<EmployeeDto> GetEmployeesRawQuery()

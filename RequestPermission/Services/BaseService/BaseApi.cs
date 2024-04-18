@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Http;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace RequestPermission.Services.BaseService;
@@ -13,7 +11,7 @@ public class BaseApi
     {
         HttpClient = httpClient;
     }
-    protected async Task HandlePutResponse<T>(T entity)
+    protected async Task HandlePutResponse<T>(T entity,string requestUrl)
     {
         var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
         var response = await HttpClient.PutAsync(ApiName, content);
