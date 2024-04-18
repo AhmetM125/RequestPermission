@@ -12,7 +12,7 @@ public class DepartmentService : BaseApi, IDepartmentService
     }
 
     public async Task AddDepartmentAsync(DepartmentInsertVM department)
-     => await HandlePostResponse(department);
+     => await HandlePostResponse(department,"InsertDepartment");
 
     public async Task DeleteDepartmentAsync(int id)
      => await HandleDeleteResponseByIntId(id, $"{id}");
@@ -27,5 +27,5 @@ public class DepartmentService : BaseApi, IDepartmentService
      => HandleReadResponse<DepartmentGridVM>("GetAllDepartments");
 
     public Task UpdateDepartmentAsync(DepartmentModifyVM department)
-     => HandlePutResponse(department);
+     => HandlePutResponse(department,"UpdateDepartment");
 }

@@ -29,7 +29,7 @@ public class EmployeeService : BaseApi, IEmployeeService
 
 
     public async Task UpdateUser(EmployeeModifyVM employeeModifyVM)
-     => await HandlePutResponse(employeeModifyVM, "UpdateEmployee");
+     => await HandlePostResponse(employeeModifyVM, "UpdateUser");
 }
 
 

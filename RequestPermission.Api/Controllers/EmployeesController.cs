@@ -61,10 +61,10 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost("UpdateUser")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(EmployeeUpdateDto),StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult UpdateUser(EmployeeUpdateDto employee)
+    public IActionResult UpdateUser([FromBody]EmployeeUpdateDto employee)
     {
         _employeeService.UpdateUser(_mapper.Map<EmployeeDto>(employee));
         return Ok();

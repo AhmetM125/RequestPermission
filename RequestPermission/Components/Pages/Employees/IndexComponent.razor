@@ -34,7 +34,7 @@
                         <td>@employee.Email</td>
                         <td>@employee.Title</td>
                         <td>
-                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>openModal(employee.Id)"></i>
+                            <i style="cursor:pointer" class="fa-solid fa-gear icon-effect" @onclick="()=>openModal(employee.Id,PageStatus.Modify)"></i>
                         </td>
                         <td>
                             <i style="cursor:pointer" class="fa-solid fa-trash icon-effect" @onclick="()=>DeleteEmployee(employee.Id)"></i>

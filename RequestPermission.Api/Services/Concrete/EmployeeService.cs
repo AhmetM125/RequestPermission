@@ -59,6 +59,10 @@ public class EmployeeService : IEmployeeService
     public void UpdateUser(EmployeeDto employee)
     {
         var employeeDto = _efEmployeeDal.GetByFilter(x => x.E_ID == employee.Id);
+
+        if(employeeDto is null)
+            throw new Exception("Employee not found");
+
         employeeDto.E_NAME = employee.Name;
         employeeDto.E_TITLE = employee.Title;
         employeeDto.E_SURNAME = employee.Surname;

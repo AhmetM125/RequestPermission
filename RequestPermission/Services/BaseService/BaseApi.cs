@@ -11,10 +11,13 @@ public class BaseApi
     {
         HttpClient = httpClient;
     }
-    protected async Task HandlePutResponse<T>(T entity,string requestUrl)
+    protected async Task HandlePutResponse<T>(T entity, string requestUrl)
     {
-        var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
-        var response = await HttpClient.PutAsync(ApiName, content);
+        //var response = await HttpClient.PutAsJsonAsync(ApiName + requestUrl, entity);
+        var content = JsonSerializer.Serialize(entity);
+        var result = new StringContent(content, Encoding.UTF8, "application/json");
+        //var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+        var response = await HttpClient.PutAsync(ApiName + requestUrl, result);
         if (!response.IsSuccessStatusCode)
         {
             var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
@@ -30,10 +33,11 @@ public class BaseApi
             throw new Exception(errorMessage);
         }
     }
-    protected async Task HandlePostResponse<T>(T entity)
+    protected async Task HandlePostResponse<T>(T entity,string requestUrl)
     {
         var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
-        var response = await HttpClient.PostAsync(ApiName, content);
+        HttpContent httpContent = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+        var response = await HttpClient.PostAsync(ApiName + requestUrl, content);
         if (!response.IsSuccessStatusCode)
         {
             var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";

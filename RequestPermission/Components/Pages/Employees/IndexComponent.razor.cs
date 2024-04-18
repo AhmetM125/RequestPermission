@@ -27,8 +27,9 @@ public partial class IndexComponent : RazorBaseComponent
         employees = await _employeeService.GetAllEmployees()
                             ?? Enumerable.Empty<EmployeesGridVM>().ToList();
     }
-    async Task openModal(Guid employeeId)
+    async Task openModal(Guid employeeId,PageStatus pageStatus)
     {
+        PageStatus = pageStatus;
         var result = employees.FirstOrDefault(x => x.Id == employeeId);
         employeeModifyVM.Id = result.Id;
         await InvokeVoidJavascript();
