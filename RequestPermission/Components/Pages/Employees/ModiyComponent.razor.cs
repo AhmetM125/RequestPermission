@@ -38,10 +38,11 @@ namespace RequestPermission.Components.Pages.Employees
                     await _employeeService.UpdateUser(EmployeeModifyVM);
                     break;
                 case PageStatus.Insert:
-                    var employeeInsertDto = new EmployeeInsertDto()
+                    var employeeInsertDto = new EmployeeInsertVM()
                     {
                         Title = EmployeeModifyVM.Position,
                         Name = EmployeeModifyVM.Name,
+                        Surname = EmployeeModifyVM.Surname,
                         Email = EmployeeModifyVM.Email,
                         Department = 3,
                     };

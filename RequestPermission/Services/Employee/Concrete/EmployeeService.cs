@@ -38,7 +38,7 @@ public class EmployeeService : BaseApi, IEmployeeService
         return default(EmployeeModifyVM);
     }
 
-    public async Task InsertUser(EmployeeInsertDto employeeModifyVM)
+    public async Task InsertUser(EmployeeInsertVM employeeModifyVM)
      => await HandlePostResponseAsJson(employeeModifyVM, "InsertNewEmployee");
 
 

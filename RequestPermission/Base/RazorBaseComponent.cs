@@ -6,9 +6,11 @@ namespace RequestPermission.Base
     public class RazorBaseComponent : ComponentBase
     {
         [Inject] protected IJSRuntime JSRuntime { get; set; }
+        [Inject] protected NavigationManager NavigationManager { get; set; }
+        protected PageStatus PageStatus { get; set; }
         protected async Task ShowModal(string modalId) => await JSRuntime.InvokeVoidAsync("ShowModal", modalId);
         protected async Task CloseModal(string modalId) => await JSRuntime.InvokeVoidAsync("CloseModal", modalId);
-        
+
     }
     public enum PageStatus
     {

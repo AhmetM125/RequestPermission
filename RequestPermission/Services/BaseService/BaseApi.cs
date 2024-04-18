@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Microsoft.Extensions.Http;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 
 namespace RequestPermission.Services.BaseService;
@@ -40,7 +42,7 @@ public class BaseApi
             throw new Exception(errorMessage);
         }
     }
-    protected async Task HandlePostResponseAsJson<T>(T entity,string requestUrl)
+    protected async Task HandlePostResponseAsJson<T>(T entity, string requestUrl)
     {
         var response = await HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity);
         if (!response.IsSuccessStatusCode)
@@ -53,6 +55,43 @@ public class BaseApi
     {
         var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
         if (!response.IsSuccessStatusCode)
+        {
+            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+            throw new Exception(errorMessage);
+        }
+    }
+    protected async Task HandleDeleteResponseByIntId(int id, string requestUrl)
+    {
+        var response = await HttpClient.DeleteAsync(ApiName + requestUrl);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+            throw new Exception(errorMessage);
+        }
+    }
+    protected async Task<List<T>?> HandleReadResponse<T>(string requestUrl)
+    {
+        var response = await HttpClient.GetAsync(ApiName + requestUrl);
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadFromJsonAsync<List<T>>();
+            return content ?? Enumerable.Empty<T>().ToList();
+        }
+        else
+        {
+            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+            throw new Exception(errorMessage);
+        }
+    }
+    protected async Task<T?> HandleSingleReadResponse<T>(string requestUrl)
+    {
+        var response = await HttpClient.GetAsync(ApiName + requestUrl);
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadFromJsonAsync<T>();
+            return content ?? default(T);
+        }
+        else
         {
             var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
             throw new Exception(errorMessage);

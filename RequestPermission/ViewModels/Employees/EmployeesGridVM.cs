@@ -2,7 +2,7 @@
 
 namespace RequestPermission.ViewModels.Employees;
 
-public record class EmployeesGridVM
+public record  EmployeesGridVM
 {
     public EmployeesGridVM(string fullName, string email, int department, string title)
     {

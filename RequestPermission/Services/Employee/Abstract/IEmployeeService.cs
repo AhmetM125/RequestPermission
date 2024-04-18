@@ -7,6 +7,6 @@ public interface IEmployeeService
     Task DeleteSelectedEmployee(Guid employeeId);
     Task<List<EmployeesGridVM>?> GetAllEmployees();
     Task<EmployeeModifyVM> GetEmployeeForModify(Guid employeeId);
-    Task InsertUser(EmployeeInsertDto employeeModifyVM);
+    Task InsertUser(EmployeeInsertVM employeeModifyVM);
     Task UpdateUser(EmployeeModifyVM employeeModifyVM);
 }
