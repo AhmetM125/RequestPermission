@@ -40,8 +40,12 @@ public class EmployeesController : ControllerBase
     [ProducesResponseType(typeof(List<EmployeeDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllEmployees()
-     => Ok(await _employeeService.GetEmployees());
+    public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
+    {
+        _employeeService.GetEmployees();
+        return Ok(await _employeeService.GetEmployees());
+
+    }
 
     [HttpGet("GetEmployeeForModify/{employeeId:Guid}")]
     [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
@@ -61,11 +65,12 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost("UpdateUser")]
-    [ProducesResponseType(typeof(EmployeeUpdateDto),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(EmployeeUpdateDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult UpdateUser([FromBody]EmployeeUpdateDto employee)
+    public IActionResult UpdateUser([FromBody] EmployeeUpdateDto employee, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         _employeeService.UpdateUser(_mapper.Map<EmployeeDto>(employee));
         return Ok();
     }

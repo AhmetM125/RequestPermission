@@ -56,11 +56,11 @@ public class EmployeeService : IEmployeeService
         await _efEmployeeDal.SaveAsync(CancellationToken.None);
     }
 
-    public void UpdateUser(EmployeeDto employee)
+    public async Task UpdateUser(EmployeeDto employee)
     {
         var employeeDto = _efEmployeeDal.GetByFilter(x => x.E_ID == employee.Id);
 
-        if(employeeDto is null)
+        if (employeeDto is null)
             throw new Exception("Employee not found");
 
         employeeDto.E_NAME = employee.Name;
@@ -68,5 +68,6 @@ public class EmployeeService : IEmployeeService
         employeeDto.E_SURNAME = employee.Surname;
 
         _efEmployeeDal.Update(employeeDto);
+        await _efEmployeeDal.SaveAsync(CancellationToken.None);
     }
 }

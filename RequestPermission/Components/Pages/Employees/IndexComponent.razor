@@ -1,5 +1,4 @@
 ﻿@page "/employees"
-@using Components.CustomComponents
 @inherits RazorBaseComponent
 
 <div style="display:flex;justify-content:flex-end">
@@ -55,13 +54,13 @@
 
 
 
-<RequestPermission.Components.CustomComponents.CustomModalComponent Id="employeeModifyModal">
+<RequestPermission.Components.Pages.Shared.CustomModalComponent Id="employeeModifyModal">
     <Body>
         <RequestPermission.Components.Pages.Employees.ModiyComponent EmployeeModifyVM="employeeModifyVM" PageMode="PageStatus" OnClose="LoadEmployees">
 
         </RequestPermission.Components.Pages.Employees.ModiyComponent>
     </Body>
-</RequestPermission.Components.CustomComponents.CustomModalComponent>
+</RequestPermission.Components.Pages.Shared.CustomModalComponent>
 
 
 

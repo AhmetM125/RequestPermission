@@ -9,5 +9,5 @@ public interface IEmployeeService
     Task<List<EmployeeDto>> GetEmployees();
     List<EmployeeDto> GetEmployeesRawQuery();
     Task InsertNewEmployee(EmployeeDto employee);
-    void UpdateUser(EmployeeDto employee);
+    Task UpdateUser(EmployeeDto employee);
 }
