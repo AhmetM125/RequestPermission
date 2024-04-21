@@ -36,6 +36,11 @@ namespace RequestPermission.Api.DataLayer.Generic
             _requestPermissionContext.Remove(obj);
         }
 
+        public void DeleteById(int id)
+        {
+            var obj = _requestPermissionContext.Find<T>(id);
+            _requestPermissionContext.Remove(obj);
+        }
 
         public IEnumerable<T> GetAll()
         {

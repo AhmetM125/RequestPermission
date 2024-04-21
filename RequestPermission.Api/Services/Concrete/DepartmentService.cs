@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RequestPermission.Api.DataLayer.Contract;
 using RequestPermission.Api.Dtos.Department;
+using RequestPermission.Api.Entity;
 using RequestPermission.Api.Services.Contracts;
 
 namespace RequestPermission.Api.Services.Concrete;
@@ -17,14 +18,14 @@ public class DepartmentService : IDepartmentService
         _mapper = mapper;
     }
 
-    public void DeleteDepartment(Guid departmentId)
+    public void DeleteDepartment(int departmentId)
     {
         _efDepartmentDal.DeleteById(departmentId);
     }
 
-    public async Task<DepartmentModifyDto> GetDepartmentForModify(Guid departmentId)
+    public async Task<DepartmentModifyDto> GetDepartmentForModify(int departmentId)
     {
-        return _efDepartmentDal.GetAsync()
+        return _mapper.Map<DepartmentModifyDto>(await _efDepartmentDal.GetByFilterAsync(x => x.D_ID == departmentId));
     }
 
     public async Task<List<DepartmentListDto>> GetDepartments()
@@ -34,18 +35,18 @@ public class DepartmentService : IDepartmentService
             .AsNoTracking().ToListAsync());
     }
 
-    public List<DepartmentDto> GetDepartmentsRawQuery()
+    public async Task<List<DepartmentDto>> GetDepartmentsRawQuery()
     {
-        throw new NotImplementedException();
+        return _mapper.Map<List<DepartmentDto>>(await _efDepartmentDal.GetQueryable().ToListAsync());
     }
 
-    public Task InsertNewDepartment(DepartmentInsertDto department)
+    public async Task InsertNewDepartment(DepartmentInsertDto department)
     {
-        throw new NotImplementedException();
+        await _efDepartmentDal.AddAsync(_mapper.Map<Department>(department));
     }
 
     public void UpdateDepartment(DepartmentModifyDto department)
     {
-        throw new NotImplementedException();
+        _mapper.Map<Department>(department);
     }
 }

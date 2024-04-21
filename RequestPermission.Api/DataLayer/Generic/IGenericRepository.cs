@@ -15,6 +15,7 @@ public interface IGenericRepository<T> : IUnitOfWork where T : class
     void Update(T entity);
     void Delete(T entity);
     void DeleteById(Guid id);
+    void DeleteById(int id);
     void DeleteAll();
     void MultipleAdd(IEnumerable<T> entities);
     void MultipleUpdate(IEnumerable<T> entities);
