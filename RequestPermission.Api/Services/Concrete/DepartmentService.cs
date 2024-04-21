@@ -1,23 +1,37 @@
-﻿using RequestPermission.Api.Dtos.Department;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using RequestPermission.Api.DataLayer.Contract;
+using RequestPermission.Api.Dtos.Department;
 using RequestPermission.Api.Services.Contracts;
 
 namespace RequestPermission.Api.Services.Concrete;
 
 public class DepartmentService : IDepartmentService
 {
-    public Task DeleteDepartment(Guid departmentId)
+    private readonly IEfDepartmentDal _efDepartmentDal;
+    private readonly IMapper _mapper;
+
+    public DepartmentService(IEfDepartmentDal efDepartmentDal, IMapper mapper)
     {
-        throw new NotImplementedException();
+        _efDepartmentDal = efDepartmentDal;
+        _mapper = mapper;
     }
 
-    public DepartmentModifyDto GetDepartmentForModify(Guid departmentId)
+    public void DeleteDepartment(Guid departmentId)
     {
-        throw new NotImplementedException();
+        _efDepartmentDal.DeleteById(departmentId);
     }
 
-    public Task<List<DepartmentListDto>> GetDepartments()
+    public async Task<DepartmentModifyDto> GetDepartmentForModify(Guid departmentId)
     {
-        throw new NotImplementedException();
+        return _efDepartmentDal.GetAsync()
+    }
+
+    public async Task<List<DepartmentListDto>> GetDepartments()
+    {
+        return _mapper.Map<List<DepartmentListDto>>
+            (await _efDepartmentDal.GetQueryable()
+            .AsNoTracking().ToListAsync());
     }
 
     public List<DepartmentDto> GetDepartmentsRawQuery()

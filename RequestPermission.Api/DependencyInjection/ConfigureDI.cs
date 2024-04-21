@@ -1,6 +1,5 @@
 ﻿using RequestPermission.Api.DataLayer.Concrete;
 using RequestPermission.Api.DataLayer.Contract;
-using RequestPermission.Api.DataLayer.Generic;
 using RequestPermission.Api.Services.Concrete;
 using RequestPermission.Api.Services.Contracts;
 
@@ -13,5 +12,7 @@ public static class ConfigureDI
         services.AddScoped<IEfEmployeeDal, EfEmployeeDal>();
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IEfEmployeeDal, EfEmployeeDal>();
+        services.AddScoped<IDepartmentService, DepartmentService>();
+        services.AddScoped<IEfDepartmentDal, EfDepartmentDal>();
     }
 }

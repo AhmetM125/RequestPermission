@@ -36,10 +36,7 @@ namespace RequestPermission.Api.DataLayer.Generic
             _requestPermissionContext.Remove(obj);
         }
 
-        public T Get(int id)
-        {
-            return _requestPermissionContext.Set<T>().FirstOrDefault();
-        }
+
         public IEnumerable<T> GetAll()
         {
             return _requestPermissionContext.Set<T>().ToList();
@@ -57,6 +54,10 @@ namespace RequestPermission.Api.DataLayer.Generic
             return _requestPermissionContext.Set<T>().FirstOrDefault(filter);
         }
 
+        public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter)
+        {
+            return await _requestPermissionContext.Set<T>().FirstOrDefaultAsync(filter);
+        }
         public T GetFirstOrDefault()
         {
             return _requestPermissionContext.Set<T>().FirstOrDefault();

@@ -42,8 +42,15 @@ public class EmployeesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
     {
-        _employeeService.GetEmployees();
-        return Ok(await _employeeService.GetEmployees());
+        try
+        {
+            await _employeeService.GetEmployees();
+            return Ok(await _employeeService.GetEmployees());
+        }
+        catch (Exception)
+        {
+            throw;
+        }
 
     }
 

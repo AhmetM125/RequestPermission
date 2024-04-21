@@ -8,7 +8,7 @@ public class DepartmentService : BaseApi, IDepartmentService
 {
     public DepartmentService(HttpClient httpClient) : base(httpClient)
     {
-        ApiName = "api/Department/";
+        ApiName = "Department/";
     }
 
     public async Task AddDepartmentAsync(DepartmentInsertVM department)
