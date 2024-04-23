@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using System.Text.Json;
 
 namespace RequestPermission.Services.BaseService;
@@ -33,7 +34,7 @@ public class BaseApi
             throw new Exception(errorMessage);
         }
     }
-    protected async Task HandlePostResponse<T>(T entity,string requestUrl)
+    protected async Task HandlePostResponse<T>(T entity, string requestUrl)
     {
         var content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
         HttpContent httpContent = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
@@ -52,6 +53,12 @@ public class BaseApi
             var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
             throw new Exception(errorMessage);
         }
+    }
+    protected T HandleLoginPostResponse<T>(T entity, string requestUrl)
+    {
+        var response = HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity).Result;
+        var responseEntity = response.Content.ReadFromJsonAsync<T>().Result;
+        return responseEntity ?? default(T);
     }
     protected async Task HandleDeleteResponse(Guid id, string requestUrl)
     {
@@ -73,16 +80,24 @@ public class BaseApi
     }
     protected async Task<List<T>?> HandleReadResponse<T>(string requestUrl)
     {
-        var response = await HttpClient.GetAsync(ApiName + requestUrl);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var content = await response.Content.ReadFromJsonAsync<List<T>>();
-            return content ?? Enumerable.Empty<T>().ToList();
+            var response = await HttpClient.GetAsync(ApiName + requestUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadFromJsonAsync<List<T>>();
+                return content ?? Enumerable.Empty<T>().ToList();
+            }
+            else
+            {
+                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                throw new Exception(errorMessage);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
-            throw new Exception(errorMessage);
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     protected async Task<T?> HandleSingleReadResponse<T>(string requestUrl)

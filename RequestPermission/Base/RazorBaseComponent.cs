@@ -19,4 +19,11 @@ namespace RequestPermission.Base
         List = 3,
         Delete = 4
     }
+    public enum MessageType
+    {
+        Error,
+        Warning,
+        Success,
+        Info
+    }
 }

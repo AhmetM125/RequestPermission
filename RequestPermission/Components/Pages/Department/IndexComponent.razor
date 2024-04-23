@@ -16,14 +16,29 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Manager</th>
+                <th>Department Id</th>
+                <th>Department Name</th>
+                <th>Is Active</th>
                 <th>Total Employee</th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody class="table table-striped">
+            @if (DepartmentGridVMs is not null && DepartmentGridVMs.Any())
+            {
+                foreach (var item in DepartmentGridVMs)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>
+                            @((MarkupString)(item.IsActive ? "<span>Active</span>" : "<span>Pasive</span>"))
+                        </td>
+
+                        <td>@item.TotalEmployee</td>
+                    </tr>
+
+                }
+            }
         </tbody>
     </table>
 </div>

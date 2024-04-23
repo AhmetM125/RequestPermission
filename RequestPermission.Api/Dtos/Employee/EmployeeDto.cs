@@ -8,6 +8,5 @@ public record EmployeeDto
     public string Email { get; set; }
     public int Department { get; set; }
     public string Title { get; set; }
-    public Guid ManagerId { get; set; }
 
 }

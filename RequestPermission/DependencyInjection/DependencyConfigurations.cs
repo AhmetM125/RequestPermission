@@ -1,4 +1,5 @@
-﻿using RequestPermission.Services.Department.Abstract;
+﻿using RequestPermission.Base;
+using RequestPermission.Services.Department.Abstract;
 using RequestPermission.Services.Department.Concrete;
 using RequestPermission.Services.Employee.Abstract;
 using RequestPermission.Services.Employee.Concrete;
@@ -11,5 +12,6 @@ public static class DependencyConfigurations
     {
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
+        services.AddScoped<MainLayoutCascadingValue>();
     }
 }

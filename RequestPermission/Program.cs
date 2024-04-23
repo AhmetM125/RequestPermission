@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Blazored.Modal;
 using Blazored.Toast;
 using RequestPermission.Components;
@@ -14,7 +15,7 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 builder.Services.AddBlazoredToast();
 builder.Services.AddBlazoredModal();
-
+builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddServices();
 

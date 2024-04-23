@@ -24,7 +24,7 @@ public class DepartmentService : BaseApi, IDepartmentService
      => await HandleSingleReadResponse<DepartmentModifyVM>($"{id}");
 
     public Task<List<DepartmentGridVM>?> GetDepartmentsAsync()
-     => HandleReadResponse<DepartmentGridVM>("GetAllDepartments");
+     => HandleReadResponse<DepartmentGridVM>("GetAllActiveDepartments");
 
     public Task UpdateDepartmentAsync(DepartmentModifyVM department)
      => HandlePutResponse(department,"UpdateDepartment");

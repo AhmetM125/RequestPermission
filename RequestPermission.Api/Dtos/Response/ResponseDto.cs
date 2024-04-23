@@ -9,9 +9,17 @@
             Data = data;
             Success = success;
         }
-        public static ResponseDto<T> CreateResponse(T data,bool success)
+        private ResponseDto(bool success)
         {
-            return new ResponseDto<T>(data,success);
+            Success = success;
+        }
+        public static ResponseDto<T> CreateResponse(T data, bool success)
+        {
+            return new ResponseDto<T>(data, success);
+        }
+        public static ResponseDto<T> CreateResponse(bool success)
+        {
+            return new ResponseDto<T>(true);
         }
     }
 }

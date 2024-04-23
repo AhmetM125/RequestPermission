@@ -23,8 +23,7 @@ public class DepartmentController : ControllerBase
     public async Task<IActionResult> GetDepartments()
     {
         var departments = await _departmentService.GetAllActiveDepartments();
-        var response = ResponseDto<List<DepartmentListDto>>.CreateResponse(departments, true);
-        return Ok(response);
+        return Ok(departments);
 
     }
 

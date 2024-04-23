@@ -8,8 +8,9 @@ namespace RequestPermission.Components.Pages.Employees;
 
 public partial class IndexComponent : RazorBaseComponent
 {
-    private List<EmployeesGridVM> employees;
     [Inject] private IEmployeeService _employeeService { get; set; }
+
+    private List<EmployeesGridVM> employees;
 
     EmployeeModifyVM employeeModifyVM = new EmployeeModifyVM();
     PageStatus PageStatus { get; set; } = PageStatus.List;
@@ -17,17 +18,17 @@ public partial class IndexComponent : RazorBaseComponent
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        if (employees is null) 
+        if (employees is null)
             await LoadEmployees();
 
-       
+
     }
     async Task LoadEmployees()
     {
         employees = await _employeeService.GetAllEmployees()
                             ?? Enumerable.Empty<EmployeesGridVM>().ToList();
     }
-    async Task openModal(Guid employeeId,PageStatus pageStatus)
+    async Task openModal(Guid employeeId, PageStatus pageStatus)
     {
         PageStatus = pageStatus;
         var result = employees.FirstOrDefault(x => x.Id == employeeId);
