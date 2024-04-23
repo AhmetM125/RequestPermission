@@ -19,5 +19,12 @@ namespace RequestPermission.Api.Infrastracture
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
+        public DbSet<Security> Securities { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<EmployeeCommunication> EmployeeCommunication { get; set; }
+
     }
 }

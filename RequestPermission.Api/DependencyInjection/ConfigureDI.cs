@@ -14,5 +14,7 @@ public static class ConfigureDI
         services.AddScoped<IEfEmployeeDal, EfEmployeeDal>();
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IEfDepartmentDal, EfDepartmentDal>();
+        services.AddScoped<ISecurityService, SecurityService>();
+        services.AddScoped<IEfSecurityDal, EfSecurityDal>();
     }
 }
