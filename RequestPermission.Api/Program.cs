@@ -7,6 +7,7 @@ using RequestPermission.Api.Infrastracture;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddAuthentication(opt =>
 {
@@ -23,7 +24,6 @@ builder.Services.AddAuthentication(opt =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"], //  "http://yurdalcompany.com"
         ValidAudience =   builder.Configuration["Jwt:Audience"], //"http://yurdalcompany.com", // builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])), 
-        // new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 

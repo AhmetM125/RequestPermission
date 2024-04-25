@@ -4,6 +4,6 @@ namespace RequestPermission.Api.Services.Contracts;
 
 public interface ISecurityService
 {
-    EmployeeLoginVM Login(EmployeeLoginVM employee);
-    void Register(EmployeeRegisterVM employee);
+    Task<LoginResponseVM> Login(EmployeeLoginVM employee);
+    Task Register(EmployeeRegisterVM employee);
 }

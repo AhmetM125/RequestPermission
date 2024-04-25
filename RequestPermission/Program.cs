@@ -1,6 +1,8 @@
 using Blazored.LocalStorage;
 using Blazored.Modal;
 using Blazored.Toast;
+using Microsoft.AspNetCore.Components.Authorization;
+using RequestPermission.Base;
 using RequestPermission.Components;
 using RequestPermission.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
@@ -11,11 +13,16 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("http://localhost:5225/api/")
+    BaseAddress = new Uri("https://localhost:7044/api/")
 });
+
+builder.Services.AddScoped<AuthorizationProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthorizationProvider>();
+builder.Services.AddScoped<MainLayoutCascadingValue>();
+builder.Services.AddAuthenticationCore();
 builder.Services.AddBlazoredToast();
 builder.Services.AddBlazoredModal();
-builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredLocalStorage(/*config=>config.JsonSerializerOptions*/);
 
 builder.Services.AddServices();
 

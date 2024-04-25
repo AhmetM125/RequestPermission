@@ -1,9 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using RequestPermission.Api.DataLayer.Contract;
 using RequestPermission.Api.Dtos.Security;
 using RequestPermission.Api.Services.Contracts;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using RequestPermission.Api.Utils;
 
 namespace RequestPermission.Api.Services.Concrete;
 
@@ -16,27 +14,38 @@ public class SecurityService : ISecurityService
         _configuration = configuration;
         _efSecurityDal = efSecurityDal;
     }
-    public EmployeeLoginVM Login(EmployeeLoginVM employee)
+    public async Task<LoginResponseVM> Login(EmployeeLoginVM employee)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expires = DateTime.Now.AddDays(int.Parse(_configuration["Jwt:JwtExpireDays"].ToString()));
+        var encryptedPassword = PasswordEncryption.Encrypt(employee.Password);
 
-        var claims = new[]
+        var employeeLoginResponse = await _efSecurityDal.GetByFilterAsync(x => x.Username == employee.Username
+                                                        && x.Password == encryptedPassword);
+
+        if (employeeLoginResponse == null)
+            throw new Exception("Invalid username or password");
+
+        JwtGenerator jwtGenerator = new JwtGenerator(_configuration);
+        var tokenString = jwtGenerator.GenerateJwtToken(employee);
+
+        return new LoginResponseVM
         {
-            new Claim(ClaimTypes.Name, employee.Username),
+            JwtToken = tokenString,
+            Username = employee.Username,
+            Id = employeeLoginResponse.Id
         };
-        var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],_configuration["Jwt:Audience"],
-                                             claims,expires: expires,signingCredentials: credentials);
-
-        String tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-        //employee.JwtToken = tokenString;
-
-        return employee;
     }
 
-    public void Register(EmployeeRegisterVM employee)
+    public async Task Register(EmployeeRegisterVM employeeRegisterVM)
     {
-        throw new NotImplementedException();
+
+        //     public string Username { get; init; }
+        //public string Password { get; init; }
+        //public string Email { get; init; }
+        //public string FirstName { get; init; }
+        //public string LastName { get; init; }
+
+        //var employee = Employee.CreateEmployeeForRegister(employeeRegisterVM.LastName, employeeRegisterVM.FirstName,
+        //                                                        employeeRegisterVM.Email);
+        //_efSecurityDal.Add(employee);
     }
 }

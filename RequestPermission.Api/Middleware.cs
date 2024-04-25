@@ -39,8 +39,8 @@ public class Middleware
 }
 public static class SimpleMiddlewareExtensions
 {
-    public static IApplicationBuilder UseMiddleware(this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<Middleware>();
-    }
+    //public static IApplicationBuilder UseMiddleware(this IApplicationBuilder builder)
+    //{
+    //    return builder.UseMiddleware<Middleware>();
+    //}
 }

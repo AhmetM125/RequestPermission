@@ -54,11 +54,19 @@ public class BaseApi
             throw new Exception(errorMessage);
         }
     }
-    protected T HandleLoginPostResponse<T>(T entity, string requestUrl)
+    protected async Task<TItem> HandleLoginPostResponse<TItem, T>(T entity, string requestUrl)
     {
-        var response = HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity).Result;
-        var responseEntity = response.Content.ReadFromJsonAsync<T>().Result;
-        return responseEntity ?? default(T);
+        try
+        {
+            var response = await HttpClient.PostAsJsonAsync(ApiName + requestUrl, entity);
+            var responseEntity = await response.Content.ReadFromJsonAsync<TItem>();
+            return responseEntity ?? default(TItem);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
     protected async Task HandleDeleteResponse(Guid id, string requestUrl)
     {

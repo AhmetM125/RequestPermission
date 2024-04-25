@@ -11,7 +11,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.HasKey(x => x.E_ID);
         builder.Property(x => x.E_NAME).IsRequired().HasMaxLength(50);
         builder.Property(x => x.E_SURNAME).IsRequired().HasMaxLength(50);
-        builder.Property(x => x.E_DEPARTMENT);
+        builder.Property(x => x.E_DEPARTMENT).IsRequired(false);
         builder.Property(x => x.E_TITLE).HasColumnType("nvarchar(50)").HasMaxLength(50);
         builder.Property(x => x.InsertUser).IsRequired(false).HasColumnType("nvarchar(50)");
         builder.Property(x => x.InsertDate).IsRequired(false).HasColumnType("datetime");
@@ -21,10 +21,6 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         builder.HasOne(x => x.EMPLOYEE_COMMUNICATION)
             .WithOne().HasForeignKey<Employee>(x => x.E_EMP_COMM_ID).OnDelete(DeleteBehavior.NoAction);
-
-        // i need all .HasColumnType that i can use it in my code give me the list of all .HasColumnType
-        var allTypeConfiguration = builder.Metadata.GetProperties().Select(x => x.GetColumnType()).Distinct().ToList();
-
-
+       
     }
 }

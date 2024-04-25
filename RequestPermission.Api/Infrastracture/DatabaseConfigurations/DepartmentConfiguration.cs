@@ -19,5 +19,8 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
         .HasForeignKey(e => e.E_DEPARTMENT)
          .OnDelete(DeleteBehavior.NoAction);
 
+        builder.HasOne(x=>x.DepartmentDto).WithOne().HasForeignKey<Department>(x=>x.D_PARENT_ID).OnDelete(DeleteBehavior.NoAction);
+        //builder.HasOne(x=>x.Manager).WithOne(x=>x.DEPARTMENT).HasForeignKey<Department>(x=>x.D_MANAGER_ID).OnDelete(DeleteBehavior.NoAction); 
+
     }
 }

@@ -1,11 +1,12 @@
-﻿namespace RequestPermission.ViewModels.Security;
+﻿using System.Text.Json.Serialization;
+
+namespace RequestPermission.ViewModels.Security;
 
 public record EmployeeLoginVM
 {
-    public Guid Id { get; set; }
+    [JsonPropertyName("username")]
     public string Username { get; set; }
+    [JsonPropertyName("password")]
     public string Password { get; set; }
-    public bool LoginStatus { get; set; } = false;
-    public string JwtToken { get; set; }
 
 }

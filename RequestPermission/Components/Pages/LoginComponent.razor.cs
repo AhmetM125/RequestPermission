@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using RequestPermission.Base;
-using RequestPermission.Services.Security;
+using RequestPermission.Services.Security.Abstract;
 using RequestPermission.ViewModels.Security;
 
 namespace RequestPermission.Components.Pages
@@ -8,6 +8,7 @@ namespace RequestPermission.Components.Pages
     public partial class LoginComponent : RazorBaseComponent
     {
         EmployeeLoginVM employeeLoginVM = new EmployeeLoginVM();
+        LoginResponse LoginResponse = new LoginResponse();
         [Inject] ILoginService _loginService { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -15,13 +16,18 @@ namespace RequestPermission.Components.Pages
             await base.OnInitializedAsync();
         }
 
-        void Login()
+        async Task Login()
         {
-            employeeLoginVM = _loginService.Login(employeeLoginVM);
-            if (employeeLoginVM.LoginStatus)
+            if (!string.IsNullOrEmpty(employeeLoginVM.Username) || !string.IsNullOrEmpty(employeeLoginVM.Password))
             {
-                NavigationManager.NavigateTo("/dashboard");
+                LoginResponse = await _loginService.Login(employeeLoginVM);
+                if (!string.IsNullOrEmpty(LoginResponse.JwtToken) && LoginResponse.Id != Guid.Empty)
+                {
+                    NavigationManager.NavigateTo("/", true);
+                }
             }
+
+
         }
 
     }

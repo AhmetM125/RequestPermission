@@ -21,20 +21,16 @@ public class MappingProfile : Profile
           .ForMember(source => source.Surname, opt => opt.MapFrom(dest => dest.E_SURNAME))
           .ForMember(source => source.Department, opt => opt.MapFrom(dest => dest.E_DEPARTMENT))
           .ForMember(source => source.Title, opt => opt.MapFrom(dest => dest.E_TITLE));
-
         ///
 
         CreateMap<Department, DepartmentDto>().ReverseMap()
             .ForMember(src => src.D_ID, opt => opt.MapFrom(dest => dest.Id))
-            .ForMember(src=>src.D_IS_ACTIVE,opt=>opt.MapFrom(dest=>dest.IsActive))
-            .ForMember(src=>src.EMPLOYEES,opt=>opt.MapFrom(dest=>dest.Employees))
+            .ForMember(src => src.D_IS_ACTIVE, opt => opt.MapFrom(dest => dest.IsActive))
+            .ForMember(src => src.EMPLOYEES, opt => opt.MapFrom(dest => dest.Employees))
             .ForMember(src => src.D_NAME, opt => opt.MapFrom(dest => dest.Name));
 
         CreateMap<DepartmentDto, DepartmentListDto>().ReverseMap();
         CreateMap<DepartmentDto, DepartmentInsertDto>().ReverseMap();
         CreateMap<DepartmentDto, DepartmentModifyDto>().ReverseMap();
-
-
-
     }
 }
